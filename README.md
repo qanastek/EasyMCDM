@@ -64,6 +64,12 @@ audi_a4,25771,195,5.7,35.8,7,440,33
 cit_xantia,25496,195,7.9,37,2,480,34
 ```
 
+# List of methods available :
+
+- [Promethee II](https://www.sciencedirect.com/science/article/pii/S0098300411004365)
+- [Electre Iv](https://en.wikipedia.org/wiki/%C3%89LECTRE) (Coming soon)
+- [Pareto](https://www.sciencedirect.com/topics/engineering/pareto-optimality) (Coming soon)
+
 # Build PyPi package
 
 Build: `python setup.py sdist bdist_wheel`
