@@ -1,0 +1,1 @@
+min,max,min,min,min,max,min
