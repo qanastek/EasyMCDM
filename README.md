@@ -41,7 +41,7 @@ Any modification made to the `EasyMCDM` package will be automatically interprete
 # Try It
 
 ```python
-data = pd.read_csv('data/donnees.csv', header=None).to_numpy()
+data = pd.read_csv('tests/data/donnees.csv', header=None).to_numpy()
 # or
 data = {
   "alfa_156": [23817.0, 201.0, 8.0, 39.6, 6.0, 378.0, 31.2],
@@ -54,6 +54,14 @@ prefs = ["min","max","min","min","min","max","min"]
 p = Promethee(verbose=False)
 res = p.solve(data=data, weights=weights, prefs=prefs)
 print(res)
+```
+
+Data in `tests/data/donnees.csv` :
+
+```csv
+alfa_156,23817,201,8,39.6,6,378,31.2
+audi_a4,25771,195,5.7,35.8,7,440,33
+cit_xantia,25496,195,7.9,37,2,480,34
 ```
 
 # Build PyPi package

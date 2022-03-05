@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: EasyMCDM
-Version: 0.1.1
+Version: 0.1.4
 Summary: A easy to use Multi-Criteria Decision-Making (MCDM) toolkit which propose implementations for Electre, Promethee and much more.
 Home-page: https://EasyMCDM.github.io/
 Author: Yanis Labrak & Others
@@ -49,6 +49,8 @@ Description:
         # Try It
         
         ```python
+        data = pd.read_csv('tests/data/donnees.csv', header=None).to_numpy()
+        # or
         data = {
           "alfa_156": [23817.0, 201.0, 8.0, 39.6, 6.0, 378.0, 31.2],
           "audi_a4": [25771.0, 195.0, 5.7, 35.8, 7.0, 440.0, 33.0],
@@ -60,6 +62,14 @@ Description:
         p = Promethee(verbose=False)
         res = p.solve(data=data, weights=weights, prefs=prefs)
         print(res)
+        ```
+        
+        Data in `tests/data/donnees.csv` :
+        
+        ```csv
+        alfa_156,23817,201,8,39.6,6,378,31.2
+        audi_a4,25771,195,5.7,35.8,7,440,33
+        cit_xantia,25496,195,7.9,37,2,480,34
         ```
         
         # Build PyPi package
