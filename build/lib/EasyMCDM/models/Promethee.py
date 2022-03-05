@@ -41,7 +41,10 @@ class Promethee(object):
     # Load the csv as a hashmap
     def load_data(self, path):
         matrix = {}
-        for line in [d.split(",") for d in open(path,"r").read().split("\n") if len(d) > 0]:
+        f = open(path,"r")
+        content = f.read()
+        f.close()
+        for line in [d.split(",") for d in content.split("\n") if len(d) > 0]:
             matrix[str(line[0])] = [float(a) for a in line[1:]]
         return matrix
 
@@ -55,11 +58,16 @@ class Promethee(object):
 
     # Read the lines of weights
     def get_weights(self, path) -> List:
-        return [[float(i) for i in w.split(",")] for w in open(path,"r").read().split("\n") if len(w) > 0]
+        f = open(path,"r")
+        content = f.read()
+        f.close()
+        return [[float(i) for i in w.split(",")] for w in content.split("\n") if len(w) > 0]
 
     # Read the line of preferences
     def get_preferences(self, path):
-        content = open(path,"r").read().replace("\n","")
+        f = open(path,"r")
+        content = f.read().replace("\n","")
+        f.close()
         if len(content) <= 0:
             print("Preferences file is empty!")
             exit(0)

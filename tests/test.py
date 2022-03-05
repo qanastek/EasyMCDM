@@ -1,6 +1,6 @@
 import unittest
 import pandas as pd
-from EasyMCDM import Promethee
+from EasyMCDM.models.Promethee import Promethee
 
 class TestPrometheeMethods(unittest.TestCase):
 
@@ -10,7 +10,7 @@ class TestPrometheeMethods(unittest.TestCase):
         w = "data/weights.txt"
         prefs = "data/preferences.txt"
 
-        p = Promethee()
+        p = Promethee(verbose=False)
         res = p.solve(data=d, weights=w, prefs=prefs)
 
         # Test Phi Negative
@@ -43,7 +43,7 @@ class TestPrometheeMethods(unittest.TestCase):
         w = [0.14,0.14,0.14,0.14,0.14,0.14,0.14]
         prefs = ["min","max","min","min","min","max","min"]
 
-        p = Promethee()
+        p = Promethee(verbose=False)
         res = p.solve(data=d, weights=w, prefs=prefs)
 
         # Test Phi Negative
@@ -76,7 +76,7 @@ class TestPrometheeMethods(unittest.TestCase):
         w = [0.14,0.14,0.14,0.14,0.14,0.14,0.14]
         prefs = ["min","max","min","min","min","max","min"]
 
-        p = Promethee()
+        p = Promethee(verbose=False)
         res = p.solve(data=d, weights=w, prefs=prefs)
 
         # Test Phi Negative

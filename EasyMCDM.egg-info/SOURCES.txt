@@ -1,0 +1,12 @@
+README.md
+setup.py
+EasyMCDM/__init__.py
+EasyMCDM/version.txt
+EasyMCDM.egg-info/PKG-INFO
+EasyMCDM.egg-info/SOURCES.txt
+EasyMCDM.egg-info/dependency_links.txt
+EasyMCDM.egg-info/requires.txt
+EasyMCDM.egg-info/top_level.txt
+EasyMCDM/models/Promethee.py
+EasyMCDM/models/__init__.py
+EasyMCDM/utils/__init__.py
