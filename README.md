@@ -41,6 +41,8 @@ Any modification made to the `EasyMCDM` package will be automatically interprete
 # Try It
 
 ```python
+data = pd.read_csv('data/donnees.csv', header=None).to_numpy()
+# or
 data = {
   "alfa_156": [23817.0, 201.0, 8.0, 39.6, 6.0, 378.0, 31.2],
   "audi_a4": [25771.0, 195.0, 5.7, 35.8, 7.0, 440.0, 33.0],
