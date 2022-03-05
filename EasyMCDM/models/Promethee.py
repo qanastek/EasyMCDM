@@ -227,7 +227,10 @@ class Promethee(object):
         phi_positive, phi_negative, phi = self.get_phi(self.names, self.promethee_matrix)
 
         # Display the matrix
-        res_matrix = self.get_printable_matrix(self.names, self.promethee_matrix, phi_positive, phi_negative, phi)
+        if self.verbose:
+            res_matrix = self.get_printable_matrix(self.names, self.promethee_matrix, phi_positive, phi_negative, phi)
+        else:
+            res_matrix = "Please run verbose to get the Promethee II matrix!"
 
         if self.verbose:
             print("Weights : ", self.weights)
