@@ -1,4 +1,4 @@
-import numpy as np
+from numpy import ndarray
 from prettytable import PrettyTable
 from typing import Dict, List, Tuple, Union
 
@@ -7,6 +7,7 @@ ENDC = '\033[0m'
 
 class Promethee(object):
 
+    # Memory allocation
     __slots__ = ['verbose', 'matrix', 'names', 'weights', 'preferences', 'promethee_matrix']
 
     # Constructor
@@ -42,10 +43,9 @@ class Promethee(object):
     def load_data(self, path):
         matrix = {}
         f = open(path,"r")
-        content = f.read()
-        f.close()
-        for line in [d.split(",") for d in content.split("\n") if len(d) > 0]:
+        for line in [d.split(",") for d in f.read().split("\n") if len(d) > 0]:
             matrix[str(line[0])] = [float(a) for a in line[1:]]
+        f.close()
         return matrix
 
     # Find the best value between both items of the pair
@@ -53,8 +53,8 @@ class Promethee(object):
 
         if (s == "min" and a < b) or (s == "max" and a > b):
             return (w, 0.0)
-        else:
-            return (0.0, w)
+
+        return (0.0, w)
 
     # Read the lines of weights
     def get_weights(self, path) -> List:
@@ -65,21 +65,23 @@ class Promethee(object):
 
     # Read the line of preferences
     def get_preferences(self, path):
+        
         f = open(path,"r")
         content = f.read().replace("\n","")
         f.close()
-        if len(content) <= 0:
-            print("Preferences file is empty!")
-            exit(0)
+
+        # Check if file is empty
+        assert len(content) > 0, FAIL + "Preferences file is empty!" + ENDC
+
         return content.split(",")
 
     # Compute
-    def compute(self, a1, a2, weights, preferences) -> Tuple[float, float]:
+    def compute(self, a1, a2) -> Tuple[float, float]:
 
         res_1, res_2 = [], []
 
         # Pour chaque champs
-        for v1, v2, w, s in zip(a1, a2, weights, preferences):
+        for v1, v2, w, s in zip(a1, a2, self.weights, self.preferences):
             r1, r2 = self.best(v1,v2,w,s)
             res_1.append(r1)
             res_2.append(r2)
@@ -87,15 +89,15 @@ class Promethee(object):
         return (sum(res_1), sum(res_2))
 
     # Compute the Promethee matrix
-    def get_promethee_matrix(self, names, weights, preferences) -> Dict:
+    def get_promethee_matrix(self) -> Dict:
 
         # Instantiate empty matrix
         res = {}
 
         # For each subject compute the promethee value
-        for i in names:
+        for i in self.names:
 
-            for j in names:
+            for j in self.names:
 
                 # Jump diagonal
                 if i == j:
@@ -103,28 +105,26 @@ class Promethee(object):
                     continue
 
                 # Compute the promethee value
-                r1, r2 = self.compute(self.matrix[i], self.matrix[j], weights, preferences)
-                res[(i,j)] = r1
-                res[(j,i)] = r2
+                res[(i,j)], res[(j,i)] = self.compute(self.matrix[i], self.matrix[j])
         
         # Return Promethee matrix
         return res
 
     # Compute the Phi values
-    def get_phi(self, names, promethee_matrix) -> Tuple[Tuple, Tuple, List]:
+    def get_phi(self) -> Tuple[Tuple, Tuple, List]:
 
         # Instantiate empty hashmap
-        phi_positive = {a: 0.0 for a in names}
-        phi_negative = {a: 0.0 for a in names}
+        phi_positive = {a: 0.0 for a in self.names}
+        phi_negative = {a: 0.0 for a in self.names}
 
         # Phi Positive
-        for i, j in promethee_matrix.keys():
-            phi_positive[i] += promethee_matrix[(i,j)]
+        for i, j in self.promethee_matrix.keys():
+            phi_positive[i] += self.promethee_matrix[(i,j)]
 
         # Phi Negative
-        for i in names:
-            for j in names:
-                phi_negative[j] += promethee_matrix[(i,j)]
+        for i in self.names:
+            for j in self.names:
+                phi_negative[j] += self.promethee_matrix[(i,j)]
 
         # Phi Neutral
         phi = [p-n for p, n in zip(phi_positive.values(), phi_negative.values())]
@@ -132,14 +132,14 @@ class Promethee(object):
         return phi_positive, phi_negative, phi
 
     # Build the matrix to display
-    def get_printable_matrix(self, names, promethee_matrix, phi_positive, phi_negative, phi) -> str:
+    def get_printable_matrix(self, phi_positive, phi_negative, phi) -> str:
         x = PrettyTable()
-        x.field_names = [""] + names + ["ϕ+","ϕ"]
-        for idx, i in enumerate(names):
+        x.field_names = [""] + self.names + ["ϕ+","ϕ"]
+        for idx, i in enumerate(self.names):
             local = []
             local.append(i)
-            for j in names:
-                local.append('%.2f' % promethee_matrix[(i,j)])
+            for j in self.names:
+                local.append('%.2f' % self.promethee_matrix[(i,j)])
             local.append('%.2f' % phi_positive[i])
             local.append('%.2f' % phi[idx])
             x.add_row(local)
@@ -149,13 +149,12 @@ class Promethee(object):
     # Sort phi and subjects to get the ranking
     def sort_res(self, names, phi_values, reverse=False) -> List:
 
-        # Create tuples for each subject and phi value
-        tuples = [(a, b) for a, b in zip(names, phi_values)]
-
-        # Order this list of tuple by phi
-        ordored_tuples = sorted(tuples, key=lambda tup: tup[1], reverse=reverse)
-
-        return ordored_tuples
+        # Create and order tuples for each subject and phi value
+        return sorted(
+            [(a, b) for a, b in zip(names, phi_values)],
+            key=lambda tup: tup[1],
+            reverse=reverse
+        )
 
     # Get and print sorted tuples
     def display_sorted(self, title, names, phi_values, reverse=False) -> List:
@@ -173,7 +172,7 @@ class Promethee(object):
     # Solve the problem
     def solve(
         self,
-        data : Union[str, np.ndarray, dict],
+        data : Union[str, ndarray, dict],
         weights : Union[str, list],
         prefs : Union[str, List[str]],
         weights_idx=0
@@ -182,7 +181,7 @@ class Promethee(object):
         # Load the data matrix
         if type(data) == str:
             self.matrix = self.load_data(data)
-        elif type(data) == np.ndarray:
+        elif type(data) == ndarray:
             self.matrix = {d[0] : [float(i) for i in d[1:]] for d in data}
         elif type(data) == dict:
             self.matrix = data
@@ -221,14 +220,14 @@ class Promethee(object):
         assert len(self.preferences) == constraints_length, FAIL + "The preferences data as a variable length, please give a consistent length with the matrix constraints !" + ENDC
 
         # Compute the promethee matrix
-        self.promethee_matrix = self.get_promethee_matrix(self.names, self.weights, self.preferences)
+        self.promethee_matrix = self.get_promethee_matrix()
 
         # Compute all three phi values
-        phi_positive, phi_negative, phi = self.get_phi(self.names, self.promethee_matrix)
+        phi_positive, phi_negative, phi = self.get_phi()
 
         # Display the matrix
         if self.verbose:
-            res_matrix = self.get_printable_matrix(self.names, self.promethee_matrix, phi_positive, phi_negative, phi)
+            res_matrix = self.get_printable_matrix(phi_positive, phi_negative, phi)
         else:
             res_matrix = "Please run verbose to get the Promethee II matrix!"
 
