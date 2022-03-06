@@ -2,6 +2,8 @@ import unittest
 import pandas as pd
 from EasyMCDM.models.Promethee import Promethee
 
+VERBOSE = False
+
 class TestPrometheeMethods(unittest.TestCase):
 
     def test_str_str_str(self):
@@ -10,7 +12,7 @@ class TestPrometheeMethods(unittest.TestCase):
         w = "data/weights.txt"
         prefs = "data/preferences.txt"
 
-        p = Promethee(verbose=False)
+        p = Promethee(verbose=VERBOSE)
         res = p.solve(data=d, weights=w, prefs=prefs)
 
         # Test Phi Negative
@@ -31,11 +33,13 @@ class TestPrometheeMethods(unittest.TestCase):
             res["phi"][0]
         )
 
-        # Matrix
-        self.assertEqual(
-            open("outputs/matrix.txt","r").read(),
-            res["matrix"]
-        )
+        if VERBOSE:
+            
+            # Matrix
+            self.assertEqual(
+                open("outputs/matrix.txt","r").read(),
+                res["matrix"]
+            )
 
     def test_numpy_list_list(self):
 
@@ -43,7 +47,7 @@ class TestPrometheeMethods(unittest.TestCase):
         w = [0.14,0.14,0.14,0.14,0.14,0.14,0.14]
         prefs = ["min","max","min","min","min","max","min"]
 
-        p = Promethee(verbose=False)
+        p = Promethee(verbose=VERBOSE)
         res = p.solve(data=d, weights=w, prefs=prefs)
 
         # Test Phi Negative
@@ -64,11 +68,13 @@ class TestPrometheeMethods(unittest.TestCase):
             res["phi"][0]
         )
 
-        # Matrix
-        self.assertEqual(
-            open("outputs/matrix.txt","r").read(),
-            res["matrix"]
-        )
+        if VERBOSE:
+
+            # Matrix
+            self.assertEqual(
+                open("outputs/matrix.txt","r").read(),
+                res["matrix"]
+            )
 
     def test_dict_list_list(self):
 
@@ -76,7 +82,7 @@ class TestPrometheeMethods(unittest.TestCase):
         w = [0.14,0.14,0.14,0.14,0.14,0.14,0.14]
         prefs = ["min","max","min","min","min","max","min"]
 
-        p = Promethee(verbose=False)
+        p = Promethee(verbose=VERBOSE)
         res = p.solve(data=d, weights=w, prefs=prefs)
 
         # Test Phi Negative
@@ -97,11 +103,13 @@ class TestPrometheeMethods(unittest.TestCase):
             res["phi"][0]
         )
 
-        # Matrix
-        self.assertEqual(
-            open("outputs/matrix.txt","r").read(),
-            res["matrix"]
-        )
+        if VERBOSE:
+
+            # Matrix
+            self.assertEqual(
+                open("outputs/matrix.txt","r").read(),
+                res["matrix"]
+            )
 
 if __name__ == '__main__':
     unittest.main()
