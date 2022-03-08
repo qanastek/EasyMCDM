@@ -15,7 +15,6 @@ class Pareto(MCDM):
                     nbCritDominated = 0
                     nbCritEquals = 0
                     for i in range(len(prefs)):
-                        print(self.matrix[candidate1][prefs[i][0]])
                         if (self.matrix[candidate1][prefs[i][0]] == self.matrix[candidate2][prefs[i][0]]):
                             nbCritEquals +=1
                         elif    (( prefs[i][1] == 'min'and self.matrix[candidate1][prefs[i][0]] < self.matrix[candidate2][prefs[i][0]]) or 
