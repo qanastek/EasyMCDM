@@ -1,6 +1,28 @@
 import unittest
 import pandas as pd
 from EasyMCDM.models.Promethee import Promethee
+from EasyMCDM.models.Pareto import Pareto
+
+class TestPrometheeMethods(unittest.TestCase):
+
+    def test_pareto(self):
+
+        d = "data/donnees.csv"
+
+        p = Pareto(data=d, verbose=True)
+        #3D Pareto on    Price   Max Speed t-1000 meters 
+        res = p.solve([(0,"min"),(1,"max"),(6,"min")])
+
+        # Audi A4 dominated by alfa 156
+        self.assertEqual(
+            ['alfa_156'],
+            res['audi_a4']['Very_Dominated_By']
+        )
+
+        self.assertEqual(
+            ['alfa_156'],
+            res['audi_a4']['Dominated_By']
+        )
 
 class TestPrometheeMethods(unittest.TestCase):
 
