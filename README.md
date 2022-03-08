@@ -41,6 +41,8 @@ Any modification made to the `EasyMCDM` package will be automatically interprete
 # Try It
 
 ```python
+from EasyMCDM.models.Promethee import Promethee
+
 data = pd.read_csv('tests/data/donnees.csv', header=None).to_numpy()
 # or
 data = {
