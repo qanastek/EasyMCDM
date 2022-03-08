@@ -1,7 +1,8 @@
+from operator import index
 import unittest
 import pandas as pd
-from EasyMCDM.models.Promethee import Promethee
 from EasyMCDM.models.Pareto import Pareto
+from EasyMCDM.models.Promethee import Promethee
 
 class TestParetoMethods(unittest.TestCase):
 
@@ -10,8 +11,8 @@ class TestParetoMethods(unittest.TestCase):
         d = "data/donnees.csv"
 
         p = Pareto(data=d, verbose=True)
-        #3D Pareto on    Price   Max Speed t-1000 meters 
-        res = p.solve([(0,"min"),(1,"max"),(6,"min")])
+        # 3 dimensional Pareto on :   Price   Max Speed t-1000 meters 
+        res = p.solve(indexes=[0,1,6], prefs=["min","max","min"])
 
         # Audi A4 dominated by alfa 156
         self.assertEqual(

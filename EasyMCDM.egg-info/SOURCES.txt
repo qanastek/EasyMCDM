@@ -8,6 +8,7 @@ EasyMCDM.egg-info/dependency_links.txt
 EasyMCDM.egg-info/requires.txt
 EasyMCDM.egg-info/top_level.txt
 EasyMCDM/models/MCDM.py
+EasyMCDM/models/Pareto.py
 EasyMCDM/models/Promethee.py
 EasyMCDM/models/__init__.py
 EasyMCDM/utils/__init__.py
