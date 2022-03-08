@@ -3,9 +3,9 @@ import pandas as pd
 from EasyMCDM.models.Promethee import Promethee
 from EasyMCDM.models.Pareto import Pareto
 
-class TestPrometheeMethods(unittest.TestCase):
+class TestParetoMethods(unittest.TestCase):
 
-    def test_pareto(self):
+    def test_audi_pareto(self):
 
         d = "data/donnees.csv"
 
