@@ -51,8 +51,8 @@ data = {
 weights = [0.14,0.14,0.14,0.14,0.14,0.14,0.14]
 prefs = ["min","max","min","min","min","max","min"]
 
-p = Promethee(verbose=False)
-res = p.solve(data=data, weights=weights, prefs=prefs)
+p = Promethee(data=data, verbose=False)
+res = p.solve(weights=weights, prefs=prefs)
 print(res)
 ```
 
