@@ -17,7 +17,10 @@ class Promethee(MCDM):
     # Find the best value between both items of the pair
     def __best(self, a, b, w, s) -> Tuple:
 
-        if (s == "min" and a < b) or (s == "max" and a > b):
+        if a == b:
+            return (0.0, 0.0)
+
+        elif (s == "min" and a < b) or (s == "max" and a > b):
             return (w, 0.0)
 
         return (0.0, w)
