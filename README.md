@@ -105,7 +105,7 @@ If you want to cite the tool you can use this:
 ```bibtex
 @misc{EasyMCDM,
   title={EasyMCDM},
-  author={Yanis Labrak},
+  author={Yanis Labrak, Quentin Raymondaud, Philippe Turcotte},
   publisher={GitHub},
   journal={GitHub repository},
   howpublished={\url{https://github.com/qanastek/EasyMCDM}},
