@@ -60,6 +60,30 @@ res = p.solve(weights=weights, prefs=prefs)
 print(res)
 ```
 
+**Electre Iv / Is :**
+
+```python
+from EasyMCDM.models.Electre import Electre
+
+data = {
+    "A1" : [80, 90,  600, 5.4,  8,  5],
+    "A2" : [65, 58,  200, 9.7,  1,  1],
+    "A3" : [83, 60,  400, 7.2,  4,  7],
+    "A4" : [40, 80, 1000, 7.5,  7, 10],
+    "A5" : [52, 72,  600, 2.0,  3,  8],
+    "A6" : [94, 96,  700, 3.6,  5,  6],
+}
+weights = [0.1, 0.2, 0.2, 0.1, 0.2, 0.2]
+prefs = ["min", "max", "min", "min", "min", "max"]
+vetoes = [45, 29, 550, 6, 4.5, 4.5]
+indifference_threshold = 0.6
+preference_thresholds = [20, 10, 200, 4, 2, 2] # or None for Electre Iv
+
+e = Electre(data=data, verbose=False)
+
+results = e.solve(weights, prefs, vetoes, indifference_threshold, preference_thresholds)
+```
+
 **Pareto :**
 
 ```python
@@ -88,8 +112,10 @@ cit_xantia,25496,195,7.9,37,2,480,34
 
 # List of methods available
 
+- [Promethee I](https://www.sciencedirect.com/science/article/pii/S0098300411004365)
 - [Promethee II](https://www.sciencedirect.com/science/article/pii/S0098300411004365)
-- [Electre Iv](https://en.wikipedia.org/wiki/%C3%89LECTRE) (Coming soon)
+- [Electre Iv](https://en.wikipedia.org/wiki/%C3%89LECTRE)
+- [Electre Is](https://en.wikipedia.org/wiki/%C3%89LECTRE)
 - [Pareto](https://www.sciencedirect.com/topics/engineering/pareto-optimality)
 
 # Build PyPi package
