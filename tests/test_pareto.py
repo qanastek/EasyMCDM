@@ -17,12 +17,12 @@ class TestParetoMethods(unittest.TestCase):
         # Audi A4 dominated by alfa 156
         self.assertEqual(
             ['alfa_156'],
-            res['audi_a4']['Very_Dominated_By']
+            res['audi_a4']['Dominated-by']
         )
 
         self.assertEqual(
             ['alfa_156'],
-            res['audi_a4']['Dominated_By']
+            res['audi_a4']['Weakly-dominated-by']
         )
 
 if __name__ == '__main__':
