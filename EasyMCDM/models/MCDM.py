@@ -4,7 +4,7 @@ from typing import Dict, List, Tuple, Union
 class MCDM(object):
 
     # Memory allocation
-    __slots__ = ['verbose', 'matrix', 'names', 'weights', 'preferences', 'promethee_matrix', 'constraints_length']
+    __slots__ = ['verbose', 'matrix', 'names', 'weights', 'preferences', 'promethee_matrix', 'constraints_length', 'col_sep', 'row_sep']
 
     # Constructor
     def __init__(self, data : Union[str, ndarray, dict], col_sep=',', row_sep='\n', verbose=True):

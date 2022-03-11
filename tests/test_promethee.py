@@ -17,7 +17,7 @@ class TestPrometheeMethods(unittest.TestCase):
 
         # Test Phi Negative
         self.assertEqual(
-            ('rnlt_safrane', 2.5200000000000005),
+            ('rnlt_safrane', 2.380000000000001),
             res["phi_negative"][0]
         )
 
@@ -29,7 +29,7 @@ class TestPrometheeMethods(unittest.TestCase):
         
         # Test Phi Neutral
         self.assertEqual(
-            ('rnlt_safrane', 3.7800000000000002),
+            ('rnlt_safrane', 3.92),
             res["phi"][0]
         )
 
@@ -50,7 +50,7 @@ class TestPrometheeMethods(unittest.TestCase):
 
         # Test Phi Negative
         self.assertEqual(
-            ('rnlt_safrane', 2.5200000000000005),
+            ('rnlt_safrane', 2.380000000000001),
             res["phi_negative"][0]
         )
 
@@ -62,7 +62,7 @@ class TestPrometheeMethods(unittest.TestCase):
         
         # Test Phi Neutral
         self.assertEqual(
-            ('rnlt_safrane', 3.7800000000000002),
+            ('rnlt_safrane', 3.92),
             res["phi"][0]
         )
 
@@ -83,7 +83,7 @@ class TestPrometheeMethods(unittest.TestCase):
 
         # Test Phi Negative
         self.assertEqual(
-            ('rnlt_safrane', 2.5200000000000005),
+            ('rnlt_safrane', 2.380000000000001),
             res["phi_negative"][0]
         )
 
@@ -95,7 +95,7 @@ class TestPrometheeMethods(unittest.TestCase):
         
         # Test Phi Neutral
         self.assertEqual(
-            ('rnlt_safrane', 3.7800000000000002),
+            ('rnlt_safrane', 3.92),
             res["phi"][0]
         )
 

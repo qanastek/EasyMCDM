@@ -10,8 +10,8 @@ class Promethee(MCDM):
     __slots__ = ['verbose', 'matrix', 'names', 'weights', 'preferences', 'promethee_matrix']
 
     # Constructor
-    def __init__(self, data : Union[str, ndarray, dict], verbose=True):
-        super().__init__(data,verbose)
+    def __init__(self, data : Union[str, ndarray, dict], col_sep=',', row_sep='\n', verbose=True):
+        super().__init__(data, col_sep=col_sep, row_sep=row_sep, verbose=verbose)
         self.promethee_matrix = {}
 
     # Find the best value between both items of the pair
