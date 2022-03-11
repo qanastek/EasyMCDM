@@ -1,4 +1,3 @@
-from numpy import ndarray
 from typing import Dict, List, Tuple, Union
 
 class MCDM(object):
@@ -7,7 +6,7 @@ class MCDM(object):
     __slots__ = ['verbose', 'matrix', 'names', 'weights', 'preferences', 'promethee_matrix', 'constraints_length', 'col_sep', 'row_sep']
 
     # Constructor
-    def __init__(self, data : Union[str, ndarray, dict], col_sep=',', row_sep='\n', verbose=True):
+    def __init__(self, data : Union[str, dict], col_sep=',', row_sep='\n', verbose=True):
 
         # Line & column separator
         self.col_sep, self.row_sep = col_sep, row_sep
@@ -27,10 +26,11 @@ class MCDM(object):
         # Load the data matrix
         if type(data) == str:
             self.matrix = self.load_data(data)
-        elif type(data) == ndarray:
-            self.matrix = {d[0] : [float(i) for i in d[1:]] for d in data}
         elif type(data) == dict:
             self.matrix = data
+        else:
+        # elif type(data) == ndarray:
+            self.matrix = {d[0] : [float(i) for i in d[1:]] for d in data}
 
         # Check matrix types
         assert self.check_consistency_dict(self.matrix) == True, MCDM.FAIL + "The input data as a variable length, please give a consistent length !" + MCDM.ENDC

@@ -1,6 +1,5 @@
-from operator import index
 import unittest
-import pandas as pd
+from operator import index
 from EasyMCDM.models.Promethee import Promethee
 
 class TestPrometheeMethods(unittest.TestCase):

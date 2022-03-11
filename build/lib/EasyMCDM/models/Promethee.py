@@ -1,4 +1,3 @@
-from numpy import ndarray
 from prettytable import PrettyTable
 from typing import Dict, List, Tuple, Union
 
@@ -10,7 +9,7 @@ class Promethee(MCDM):
     __slots__ = ['verbose', 'matrix', 'names', 'weights', 'preferences', 'promethee_matrix']
 
     # Constructor
-    def __init__(self, data : Union[str, ndarray, dict], col_sep=',', row_sep='\n', verbose=True):
+    def __init__(self, data : Union[str, dict], col_sep=',', row_sep='\n', verbose=True):
         super().__init__(data, col_sep=col_sep, row_sep=row_sep, verbose=verbose)
         self.promethee_matrix = {}
 

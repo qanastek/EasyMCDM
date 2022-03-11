@@ -1,4 +1,3 @@
-from numpy import ndarray
 from typing import Dict, List, Tuple, Union
 from itertools import combinations
 from EasyMCDM.models.MCDM import MCDM
@@ -6,7 +5,7 @@ from EasyMCDM.models.MCDM import MCDM
 class Pareto(MCDM):
     
     # Constructor
-    def __init__(self, data : Union[str, ndarray, dict], col_sep=',', row_sep='\n', verbose=True):
+    def __init__(self, data : Union[str, dict], col_sep=',', row_sep='\n', verbose=True):
         super().__init__(data, col_sep=col_sep, row_sep=row_sep, verbose=verbose)
         self.nbr_items = {}
 

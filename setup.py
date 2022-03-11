@@ -24,8 +24,6 @@ setup(
         ]
     },
     install_requires = [
-        "numpy",
-        "pandas",
         "prettytable",
     ],
     python_requires = ">=3.6",
