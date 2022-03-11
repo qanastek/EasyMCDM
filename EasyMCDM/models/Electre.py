@@ -14,8 +14,8 @@ class Electre(MCDM):
     ]
 
     # Constructor
-    def __init__(self, data : Union[str, ndarray, dict], verbose=True):
-        super().__init__(data, verbose)
+    def __init__(self, data : Union[str, ndarray, dict], col_sep=',', row_sep='\n', verbose=True):
+        super().__init__(data, col_sep=col_sep, row_sep=row_sep, verbose=verbose)
 
     def __print_electre__(
         self, 

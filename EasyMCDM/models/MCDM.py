@@ -7,15 +7,18 @@ class MCDM(object):
     __slots__ = ['verbose', 'matrix', 'names', 'weights', 'preferences', 'promethee_matrix', 'constraints_length']
 
     # Constructor
-    def __init__(self, data : Union[str, ndarray, dict], verbose=True):
+    def __init__(self, data : Union[str, ndarray, dict], col_sep=',', row_sep='\n', verbose=True):
 
-        # Verbose or not
+        # Line & column separator
+        self.col_sep, self.row_sep = col_sep, row_sep
+
+        # Verbose ?
         self.verbose = verbose
 
         FAIL = '\033[91m'
         ENDC = '\033[0m'
 
-        # Others
+        # Init
         self.names = []
         self.matrix = {}
         self.weights = []
@@ -58,7 +61,7 @@ class MCDM(object):
     def load_data(self, path):
         matrix = {}
         f = open(path,"r")
-        for line in [d.split(",") for d in f.read().split("\n") if len(d) > 0]:
+        for line in [d.split(self.col_sep) for d in f.read().split(self.row_sep) if len(d) > 0]:
             matrix[str(line[0])] = [float(a) for a in line[1:]]
         f.close()
         return matrix
@@ -67,7 +70,7 @@ class MCDM(object):
     def get_preferences(self, path):
         
         f = open(path,"r")
-        content = f.read().replace("\n","")
+        content = f.read().replace(self.row_sep,"")
         f.close()
 
         # Check if file is empty
@@ -80,4 +83,4 @@ class MCDM(object):
         f = open(path,"r")
         content = f.read()
         f.close()
-        return [[float(i) for i in w.split(",")] for w in content.split("\n") if len(w) > 0]
+        return [[float(i) for i in w.split(self.col_sep)] for w in content.split(self.row_sep) if len(w) > 0]

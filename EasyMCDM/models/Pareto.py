@@ -1,57 +1,71 @@
 from numpy import ndarray
 from typing import Dict, List, Tuple, Union
-
+from itertools import combinations
 from EasyMCDM.models.MCDM import MCDM
 
 class Pareto(MCDM):
     
     # Constructor
-    def __init__(self, data : Union[str, ndarray, dict], verbose=True):
-        super().__init__(data,verbose)
+    def __init__(self, data : Union[str, ndarray, dict], col_sep=',', row_sep='\n', verbose=True):
+        super().__init__(data, col_sep=col_sep, row_sep=row_sep, verbose=verbose)
         self.nbr_items = {}
 
-    # Solve the problem
+    # Solve the problem by returning a Pareto Dominance Dict in O( len(pref) * ( len(combination(candidate) ) )
     def solve(self, indexes: List[str], prefs: List[str]) -> Dict:
-
-        # Number of elements
         self.nbr_items = len(prefs)
-
         assert len(indexes) == self.nbr_items, MCDM.FAIL + "Indexes and preferences length aren't the sames!" + MCDM.ENDC
 
-        # Initialize
-        dominance = {c : {"Dominated_By":[], "Very_Dominated_By":[]} for c in self.matrix}
+        # Result : dominance dictonnary
+        self.dominance = {c : {"Weakly-dominated-by":[], "Dominated-by":[]} for c in self.matrix}
+        
+        # Get all pairs of candidate
+        cndt_pairs = combinations(self.matrix,2)
 
-        # For each cars
-        for c1 in self.matrix:
-            for c2 in self.matrix:
+        # Foreach pair of candidate
+        for cndt_pair in cndt_pairs:
 
-                # Prevent diagonal
-                if c1 == c2 :
-                    continue
+            cndt1, cndt2 = cndt_pair
+            nbCritDominatedCndt1, nbCritDominatedCndt2, nbCritEquals = 0, 0, 0
 
-                nbCritDominated, nbCritEquals = 0, 0
+            # For each item check if dominate or dominated
+            for i in range(self.nbr_items):
 
-                # For each item check if dominate or dominated
-                for i in range(self.nbr_items):
+                # Get column index on which we want to search a prefered optimum (min/max)
+                idx, pref = indexes[i], prefs[i]
 
-                    # Get index and preference
-                    idx, pref = indexes[i], prefs[i]
+                # Get candidate values to compare
+                cndt1_value, cndt2_value = self.matrix[cndt1][idx], self.matrix[cndt2][idx]
 
-                    # Get values
-                    c1_value, c2_value = self.matrix[c1][idx], self.matrix[c2][idx]
+                # Dominance checking
+                if cndt1_value == cndt2_value:
+                    nbCritEquals +=1
 
-                    # Check if dominated or not
-                    if c1_value == c2_value:
-                        nbCritEquals +=1
-                    elif (pref == 'min'and c1_value < c2_value) or (pref == 'max' and c1_value > c2_value):
-                        nbCritDominated +=1
+                elif pref == 'min':
+                    if cndt1_value < cndt2_value:
+                        nbCritDominatedCndt1 +=1
+                    else:
+                        nbCritDominatedCndt2 +=1
 
-                # If very dominated
-                if nbCritDominated == self.nbr_items:
-                    dominance[c2]['Very_Dominated_By'].append(c1)
-                
-                # If dominated
-                if nbCritDominated + nbCritEquals == self.nbr_items:
-                    dominance[c2]['Dominated_By'].append(c1)
+                else: # pref == 'max'
+                    if cndt1_value > cndt2_value:
+                        nbCritDominatedCndt1 +=1
+                    else:
+                        nbCritDominatedCndt2 +=1
 
-        return dominance
+            # If Candidate 2 dominated
+            if nbCritDominatedCndt1 + nbCritEquals == self.nbr_items:
+                self.dominance[cndt2]['Weakly-dominated-by'].append(cndt1)
+
+                # If candidate 2 very dominated
+                if nbCritDominatedCndt1 == self.nbr_items:
+                    self.dominance[cndt2]['Dominated-by'].append(cndt1)
+
+            # If Candidate 1 dominated
+            elif nbCritDominatedCndt2 + nbCritEquals == self.nbr_items: 
+                self.dominance[cndt1]['Weakly-dominated-by'].append(cndt2)
+
+                # If Candidate 1 very dominated
+                if nbCritDominatedCndt2 == self.nbr_items:
+                    self.dominance[cndt1]['Dominated-by'].append(cndt2)
+
+        return self.dominance
