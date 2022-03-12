@@ -1,14 +1,13 @@
-from operator import index
 import unittest
-from EasyMCDM.models.WSum import WSum
+from EasyMCDM.models.WeightedSum import WeightedSum
 
-class TestWSumMethods(unittest.TestCase):
+class TestWeightedSumMethods(unittest.TestCase):
 
-    def test_global_wsum(self):
+    def test_global_WeightedSum(self):
 
         d = "data/donnees.csv"
 
-        p = WSum(data=d, verbose=True)
+        p = WeightedSum(data=d, verbose=True)
         # 3 dimensional Pareto on :   Price   Max Speed t-1000 meters 
         res = p.solve(pref_indexes=[0,1,6],prefs=["min","max","min"], weights=[0.001,2,3], target='min')
 

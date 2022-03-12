@@ -1,5 +1,3 @@
-
-
 [![PyPI version](https://badge.fury.io/py/EasyMCDM.svg)](https://badge.fury.io/py/EasyMCDM)
 [![GitHub Issues](https://img.shields.io/github/issues/qanastek/EasyMCDM.svg)](https://github.com/qanastek/EasyMCDM/issues)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -29,8 +27,7 @@ pip3 install --editable .
 
 Any modification made to the `EasyMCDM` package will be automatically interpreted as we installed it with the `--editable` flag.
 
-
-## Setup with Anaconda 
+## Setup with Anaconda
 
 ```bash
 conda create --name EasyMCDM python=3.6 -y
@@ -38,7 +35,6 @@ conda activate EasyMCDM
 ```
 
 More information on managing environments with Anaconda can be found in [the conda cheat sheet](https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf).
-
 
 # Try It
 
@@ -105,8 +101,9 @@ print(res)
 ```
 
 **Weighted Sum :**
+
 ```python
-from EasyMCDM.models.WSum import WSum
+from EasyMCDM.models.WeightedSum import WeightedSum
 
 data = 'tests/data/donnees.csv'
 # or
@@ -116,11 +113,10 @@ data = {
   "cit_xantia": [25496.0, 195.0, 7.9, 37.0, 2.0, 480.0, 34.0]
 }
 
-p = WSum(data=data, verbose=False)
+p = WeightedSum(data=data, verbose=False)
 res = p.solve(pref_indexes=[0,1,6],prefs=["min","max","min"], weights=[0.001,2,3], target='min')
 print(res)
 ```
-
 
 Data in `tests/data/donnees.csv` :
 
@@ -136,6 +132,7 @@ cit_xantia,25496,195,7.9,37,2,480,34
 - [Promethee II](https://www.sciencedirect.com/science/article/pii/S0098300411004365)
 - [Electre Iv](https://en.wikipedia.org/wiki/%C3%89LECTRE)
 - [Electre Is](https://en.wikipedia.org/wiki/%C3%89LECTRE)
+- [Weighted Sum](https://en.wikipedia.org/wiki/Weighted_sum_model)
 - [Pareto](https://www.sciencedirect.com/topics/engineering/pareto-optimality)
 
 # Build PyPi package

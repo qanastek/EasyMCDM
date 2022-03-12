@@ -7,12 +7,11 @@ class Pareto(MCDM):
     # Constructor
     def __init__(self, data : Union[str, dict], col_sep=',', row_sep='\n', verbose=True):
         super().__init__(data, col_sep=col_sep, row_sep=row_sep, verbose=verbose)
-        self.nbr_items = {}
 
-    # Solve the problem by returning a Pareto Dominance Dict in O( len(pref) * ( len(combination(candidate) ) )
+    # Solve the problem by returning a Pareto Dominance Dict in O(len(pref) * len(combinations(candidates))
     def solve(self, indexes: List[str], prefs: List[str]) -> Dict:
         self.nbr_items = len(prefs)
-        assert len(indexes) == self.nbr_items, MCDM.FAIL + "Indexes and preferences length aren't the sames!" + MCDM.ENDC
+        assert len(indexes) == self.nbr_items, "Indexes and preferences length aren't the sames!"
 
         # Result : dominance dictonnary
         self.dominance = {c : {"Weakly-dominated-by":[], "Dominated-by":[]} for c in self.matrix}

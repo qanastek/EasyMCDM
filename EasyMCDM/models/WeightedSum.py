@@ -2,7 +2,7 @@ import numpy as np
 from typing import Dict, List, Tuple, Union
 from EasyMCDM.models.MCDM import MCDM
 
-class WSum(MCDM):
+class WeightedSum(MCDM):
     
     # Constructor
     def __init__(self, data : Union[str, np.ndarray, dict], col_sep=',', row_sep='\n', verbose=True):
@@ -11,8 +11,8 @@ class WSum(MCDM):
     # Solve the problem by returning a ranked list of tuple in 0(n) iterations
     def solve(self, pref_indexes: List[int], prefs: List[str], weights: List[float], target='min') -> List[tuple]:
         keys=[key for key in self.matrix.keys()]
-        assert len(pref_indexes) == len(weights)," - WSum.solve() - weights size doesn't match threshold_indexes size"
-        assert len(pref_indexes) == len(prefs)," - WSum.solve() - prefs size doesn't match pref_indexes size"
+        assert len(pref_indexes) == len(weights)," - WeightedSum.solve() - weights size doesn't match threshold_indexes size"
+        assert len(pref_indexes) == len(prefs)," - WeightedSum.solve() - prefs size doesn't match pref_indexes size"
 
         # Adjusting weights
         weights = [weights[i] if prefs[i] == target else weights[i]*-1 for i in range(len(weights))]
