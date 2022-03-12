@@ -6,9 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 <!-- [![Downloads](https://static.pepy.tech/personalized-badge/EasyMCDM?period=total&units=international_system&left_color=grey&right_color=orange&left_text=Downloads)](https://pepy.tech/project/EasyMCDM) -->
 
-# Quick installation
-
-# EasyMCDM - Install
+# EasyMCDM - Quick Installation methods
 
 ## Install with PyPI
 
