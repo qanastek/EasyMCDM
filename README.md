@@ -8,21 +8,14 @@
 
 # Quick installation
 
-## Anaconda setup
+# EasyMCDM - Install
 
-```bash
-conda create --name EasyMCDM python=3.6 -y
-conda activate EasyMCDM
-```
-
-More information on managing environments with Anaconda can be found in [the conda cheat sheet](https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf).
-
-## Install via PyPI
+## Install with PyPI
 
 Once you have created your Python environment (Python 3.6+) you can simply type:
 
 ```bash
-pip install EasyMCDM
+pip3 install EasyMCDM
 ```
 
 ## Install with GitHub
@@ -32,11 +25,22 @@ Once you have created your Python environment (Python 3.6+) you can simply type:
 ```bash
 git clone https://github.com/qanastek/EasyMCDM.git
 cd EasyMCDM
-pip install -r requirements.txt
-pip install --editable .
+pip3 install -r requirements.txt
+pip3 install --editable .
 ```
 
 Any modification made to the `EasyMCDM` package will be automatically interpreted as we installed it with the `--editable` flag.
+
+
+## Setup with Anaconda 
+
+```bash
+conda create --name EasyMCDM python=3.6 -y
+conda activate EasyMCDM
+```
+
+More information on managing environments with Anaconda can be found in [the conda cheat sheet](https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf).
+
 
 # Try It
 
