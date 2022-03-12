@@ -114,7 +114,7 @@ data = {
   "cit_xantia": [25496.0, 195.0, 7.9, 37.0, 2.0, 480.0, 34.0]
 }
 
-p = Pareto(data=data, verbose=False)
+p = WSum(data=data, verbose=False)
 res = p.solve(pref_indexes=[0,1,6],prefs=["min","max","min"], weights=[0.001,2,3], target='min')
 print(res)
 ```
