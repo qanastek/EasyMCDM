@@ -89,7 +89,7 @@ results = e.solve(weights, prefs, vetoes, indifference_threshold, preference_thr
 ```python
 from EasyMCDM.models.Pareto import Pareto
 
-data = pd.read_csv('tests/data/donnees.csv', header=None).to_numpy()
+data = 'tests/data/donnees.csv'
 # or
 data = {
   "alfa_156": [23817.0, 201.0, 8.0, 39.6, 6.0, 378.0, 31.2],
@@ -101,6 +101,24 @@ p = Pareto(data=data, verbose=False)
 res = p.solve(indexes=[0,1,6], prefs=["min","max","min"])
 print(res)
 ```
+
+**Weighted Sum :**
+```python
+from EasyMCDM.models.WSum import WSum
+
+data = 'tests/data/donnees.csv'
+# or
+data = {
+  "alfa_156": [23817.0, 201.0, 8.0, 39.6, 6.0, 378.0, 31.2],
+  "audi_a4": [25771.0, 195.0, 5.7, 35.8, 7.0, 440.0, 33.0],
+  "cit_xantia": [25496.0, 195.0, 7.9, 37.0, 2.0, 480.0, 34.0]
+}
+
+p = Pareto(data=data, verbose=False)
+res = p.solve(pref_indexes=[0,1,6],prefs=["min","max","min"], weights=[0.001,2,3], target='min')
+print(res)
+```
+
 
 Data in `tests/data/donnees.csv` :
 
