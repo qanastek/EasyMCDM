@@ -22,7 +22,7 @@ class MCDM(object):
         self.matrix = {}
         self.weights = []
         self.preferences = []
-
+    
         # Load the data matrix
         if type(data) == str:
             self.matrix = self.load_data(data)
