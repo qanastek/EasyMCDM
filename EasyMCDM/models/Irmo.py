@@ -3,7 +3,7 @@ from typing import Dict, List, Tuple, Union
 
 from EasyMCDM.models.MCDM import MCDM
 
-# Instant-runoff Multicriteria Optimization
+# Instant-Runoff Multicriteria Optimization (IRMO)
 class Irmo(MCDM):
 
     # Memory allocation
@@ -32,7 +32,7 @@ class Irmo(MCDM):
                 else:
                     
                     # Best item value
-                    if (idx == nbr_rounds - 1 and self.preferences[i] == "min") or (idx != nbr_rounds - 1 and self.preferences[i] == "max"):
+                    if (idx == nbr_rounds - 1 and self.preferences[idx] == "min") or (idx != nbr_rounds - 1 and self.preferences[idx] == "max"):
                         insert_value = math.inf
                     else:
                         insert_value = -math.inf
@@ -56,7 +56,7 @@ class Irmo(MCDM):
             items_vec = self.__getVector(i, idx, banned, nbr_rounds)
 
             # Best item value
-            if (idx == nbr_rounds - 1 and self.preferences[i] == "min") or (idx != nbr_rounds - 1 and self.preferences[i] == "max"):
+            if (idx == nbr_rounds - 1 and self.preferences[idx] == "min") or (idx != nbr_rounds - 1 and self.preferences[idx] == "max"):
                 value = min(items_vec)
             else:
                 value = max(items_vec)
@@ -73,7 +73,7 @@ class Irmo(MCDM):
 
         return {
             "best": banned[0], # Return best
-            "rank": banned, # Return ranking
+            "eleminated": banned
         }
 
     # Solve the problem

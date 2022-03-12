@@ -38,7 +38,15 @@ More information on managing environments with Anaconda can be found in [the con
 
 # Try It
 
-**Promethee :**
+Data in `tests/data/donnees.csv` :
+
+```csv
+alfa_156,23817,201,8,39.6,6,378,31.2
+audi_a4,25771,195,5.7,35.8,7,440,33
+cit_xantia,25496,195,7.9,37,2,480,34
+```
+
+## Promethee
 
 ```python
 from EasyMCDM.models.Promethee import Promethee
@@ -58,7 +66,18 @@ res = p.solve(weights=weights, prefs=prefs)
 print(res)
 ```
 
-**Electre Iv / Is :**
+**Output :**
+
+```python
+{
+  'phi_negative': [('rnlt_safrane', 2.381), ('vw_passat', 2.9404), ('bmw_320d', 3.3603), ('saab_tid', 3.921), ('audi_a4', 4.34), ('cit_xantia', 4.48), ('rnlt_laguna', 5.04), ('alfa_156', 5.32), ('peugeot_406', 5.461), ('cit_xsara', 5.741)],
+  'phi_positive': [('rnlt_safrane', 6.301), ('vw_passat', 5.462), ('bmw_320d', 5.18), ('saab_tid', 4.76), ('audi_a4', 4.0605), ('cit_xantia', 3.921), ('rnlt_laguna', 3.6406), ('alfa_156', 3.501), ('peugeot_406', 3.08), ('cit_xsara', 3.08)],
+  'phi': [('rnlt_safrane', 3.92), ('vw_passat', 2.5214), ('bmw_320d', 1.8194), ('saab_tid', 0.839), ('audi_a4', -0.27936), ('cit_xantia', -0.5596), ('rnlt_laguna', -1.3995), ('alfa_156', -1.8194), ('peugeot_406', -2.381), ('cit_xsara', -2.661)],
+  'matrix': '...'
+}
+```
+
+## Electre Iv / Is
 
 ```python
 from EasyMCDM.models.Electre import Electre
@@ -82,7 +101,13 @@ e = Electre(data=data, verbose=False)
 results = e.solve(weights, prefs, vetoes, indifference_threshold, preference_thresholds)
 ```
 
-**Pareto :**
+**Output :**
+
+```python
+{'kernels': ['A4', 'A5']}
+```
+
+## Pareto
 
 ```python
 from EasyMCDM.models.Pareto import Pareto
@@ -100,7 +125,24 @@ res = p.solve(indexes=[0,1,6], prefs=["min","max","min"])
 print(res)
 ```
 
-**Weighted Sum :**
+**Output :**
+
+```python
+{
+  'alfa_156': {'Weakly-dominated-by': [], 'Dominated-by': []},
+  'audi_a4': {'Weakly-dominated-by': ['alfa_156'], 'Dominated-by': ['alfa_156']}, 
+  'cit_xantia': {'Weakly-dominated-by': ['alfa_156', 'vw_passat'], 'Dominated-by': ['alfa_156']},
+  'peugeot_406': {'Weakly-dominated-by': ['alfa_156', 'cit_xantia', 'rnlt_laguna', 'vw_passat'], 'Dominated-by': ['alfa_156', 'cit_xantia', 'rnlt_laguna', 'vw_passat']},
+  'saab_tid': {'Weakly-dominated-by': ['alfa_156'], 'Dominated-by': ['alfa_156']}, 
+  'rnlt_laguna': {'Weakly-dominated-by': ['vw_passat'], 'Dominated-by': ['vw_passat']}, 
+  'vw_passat': {'Weakly-dominated-by': [], 'Dominated-by': []},
+  'bmw_320d': {'Weakly-dominated-by': [], 'Dominated-by': []},
+  'cit_xsara': {'Weakly-dominated-by': [], 'Dominated-by': []},
+  'rnlt_safrane': {'Weakly-dominated-by': ['bmw_320d'], 'Dominated-by': ['bmw_320d']}
+}
+```
+
+## Weighted Sum
 
 ```python
 from EasyMCDM.models.WeightedSum import WeightedSum
@@ -118,13 +160,31 @@ res = p.solve(pref_indexes=[0,1,6],prefs=["min","max","min"], weights=[0.001,2,3
 print(res)
 ```
 
-Data in `tests/data/donnees.csv` :
+**Output :**
 
-```csv
-alfa_156,23817,201,8,39.6,6,378,31.2
-audi_a4,25771,195,5.7,35.8,7,440,33
-cit_xantia,25496,195,7.9,37,2,480,34
+```python
+[(1, 'bmw_320d', -299.04), (2, 'alfa_156', -284.58299999999997), (3, 'rnlt_safrane', -280.84), (4, 'saab_tid', -275.817), (5, 'vw_passat', -265.856), (6, 'audi_a4', -265.229), (7, 'rnlt_laguna', -262.93600000000004), (8, 'cit_xantia', -262.504), (9, 'peugeot_406', -252.551), (10, 'cit_xsara', -244.416)]
 ```
+
+## Instant-Runoff Multicriteria Optimization (IRMO)
+
+```python
+from EasyMCDM.models.Irmo import Irmo
+
+p = Irmo(data="data/donnees.csv", verbose=False)
+res = p.solve(
+    indexes=[0,1,4,5], # price -> max_speed -> comfort -> trunk_space
+    prefs=["min","max","min","max"]
+)
+print(res)
+```
+
+**Output :**
+
+```python
+{'best': 'saab_tid'}
+```
+
 
 # List of methods available
 
@@ -134,6 +194,7 @@ cit_xantia,25496,195,7.9,37,2,480,34
 - [Electre Is](https://en.wikipedia.org/wiki/%C3%89LECTRE)
 - [Weighted Sum](https://en.wikipedia.org/wiki/Weighted_sum_model)
 - [Pareto](https://www.sciencedirect.com/topics/engineering/pareto-optimality)
+- Instant-Runoff Multicriteria Optimization (IRMO)
 
 # Build PyPi package
 
