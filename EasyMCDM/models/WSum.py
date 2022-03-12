@@ -8,8 +8,8 @@ class WSum(MCDM):
     def __init__(self, data : Union[str, np.ndarray, dict], col_sep=',', row_sep='\n', verbose=True):
         super().__init__(data, col_sep=col_sep, row_sep=row_sep, verbose=verbose)
 
-    # Solve the problem by returning a ranking in 0(n)
-    def solve(self, pref_indexes: List[int], prefs: List[str], weights: List[float], target='min') -> Dict:
+    # Solve the problem by returning a ranked list of tuple in 0(n) iterations
+    def solve(self, pref_indexes: List[int], prefs: List[str], weights: List[float], target='min') -> List[tuple]:
         keys=[key for key in self.matrix.keys()]
         assert len(pref_indexes) == len(weights)," - WSum.solve() - weights size doesn't match threshold_indexes size"
         assert len(pref_indexes) == len(prefs)," - WSum.solve() - prefs size doesn't match pref_indexes size"
@@ -22,7 +22,7 @@ class WSum(MCDM):
 
         # Weighted Summing
         res = [np.sum(line) for line in np.multiply(matrix[:], [weights for i in self.matrix])]
-        
+
         # Shift Index sort on weighted sum 
         argres = np.asarray(res).argsort() if target=='min' else (-np.asarray(res)).argsort()
 
