@@ -168,6 +168,8 @@ print(res)
 
 ## Instant-Runoff Multicriteria Optimization (IRMO)
 
+**Short description** : Eliminate the worst individual for each criteria, until we reach the last one and select the best one.
+
 ```python
 from EasyMCDM.models.Irmo import Irmo
 
