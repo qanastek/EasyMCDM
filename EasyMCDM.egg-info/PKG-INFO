@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: EasyMCDM
-Version: 0.5.3
+Version: 0.5.4
 Summary: A easy to use Multi-Criteria Decision-Making (MCDM) toolkit which propose implementations for Electre, Promethee and much more.
 Home-page: https://EasyMCDM.github.io/
 Author: Yanis Labrak & Others

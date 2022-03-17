@@ -44,10 +44,14 @@ class Promethee(MCDM):
         res = {}
 
         # For each subject compute the promethee value
-        for i in self.names:
+        for i_idx in range(len(self.names)):
 
-            for j in self.names:
+            i = self.names[i_idx]
 
+            for j_idx in range(i_idx, len(self.names)):
+
+                j = self.names[j_idx]
+                
                 # Jump diagonal
                 if i == j:
                     res[(i,j)] = 0.0

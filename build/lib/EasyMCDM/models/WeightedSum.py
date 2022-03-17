@@ -29,7 +29,8 @@ class WeightedSum(MCDM):
         # Sorting results
         res = [res[index] for index in argres]
         ranks = [i for i in range(1,len(argres)+1)]
-        labels = [list(self.matrix.keys())[index] for index in argres]
+        keys = list(self.matrix.keys())
+        labels = [keys[index] for index in argres]
         scores = [(rank, key, score) for key, score, rank in zip(labels, res, ranks)]
 
         return scores
