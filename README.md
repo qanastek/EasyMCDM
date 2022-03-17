@@ -2,7 +2,7 @@
 [![GitHub Issues](https://img.shields.io/github/issues/qanastek/EasyMCDM.svg)](https://github.com/qanastek/EasyMCDM/issues)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
-<!-- [![Downloads](https://static.pepy.tech/personalized-badge/EasyMCDM?period=total&units=international_system&left_color=grey&right_color=orange&left_text=Downloads)](https://pepy.tech/project/EasyMCDM) -->
+[![Downloads](https://static.pepy.tech/personalized-badge/EasyMCDM?period=total&units=international_system&left_color=grey&right_color=orange&left_text=Downloads)](https://pepy.tech/project/EasyMCDM)
 
 # EasyMCDM - Quick Installation methods
 
@@ -167,6 +167,8 @@ print(res)
 ```
 
 ## Instant-Runoff Multicriteria Optimization (IRMO)
+
+**Short description** : Eliminate the worst individual for each criteria, until we reach the last one and select the best one.
 
 ```python
 from EasyMCDM.models.Irmo import Irmo
