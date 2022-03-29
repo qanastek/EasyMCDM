@@ -103,7 +103,7 @@ class Irmo(MCDM):
             self.preferences = prefs
 
         # Check if has preferences other than max and min 
-        assert sorted(list(set(self.preferences))) == ['max', 'min'], '\033[91m' + "The preferences need to containt only min and max. Found : " + str(sorted(list(set(self.preferences)))) + '\033[0m'
+        assert all([a in ['max', 'min'] for a in sorted(list(set(self.preferences)))]), '\033[91m' + "The preferences need to containt only min and max. Found : " + str(sorted(list(set(self.preferences)))) + '\033[0m'
         
         # Check if the lengths matches togethers
         assert len(self.preferences) == len(self.indexes), '\033[91m' + "The number of preferences as a variable length, please give a consistent length with the indexes !" + '\033[0m'

@@ -33,7 +33,7 @@ class MCDM(object):
             self.matrix = {d[0] : [float(i) for i in d[1:]] for d in data}
 
         # Check matrix types
-        assert self.check_consistency_dict(self.matrix) == True, MCDM.FAIL + "The input data as a variable length, please give a consistent length !" + MCDM.ENDC
+        assert self.check_consistency_dict(self.matrix) == True, '\033[91m' + "The input data as a variable length, please give a consistent length !" + '\033[0m'
 
         # Get subjects names
         self.names = list(self.matrix.keys())
@@ -74,7 +74,7 @@ class MCDM(object):
         f.close()
 
         # Check if file is empty
-        assert len(content) > 0, MCDM.FAIL + "Preferences file is empty!" + MCDM.ENDC
+        assert len(content) > 0, '\033[91m' + "Preferences file is empty!" + '\033[0m'
 
         return content.split(",")
 

@@ -187,7 +187,6 @@ print(res)
 {'best': 'saab_tid'}
 ```
 
-
 # List of methods available
 
 - [Promethee I](https://www.sciencedirect.com/science/article/pii/S0098300411004365)

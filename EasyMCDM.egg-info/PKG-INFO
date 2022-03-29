@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: EasyMCDM
-Version: 0.5.4
+Version: 0.5.5
 Summary: A easy to use Multi-Criteria Decision-Making (MCDM) toolkit which propose implementations for Electre, Promethee and much more.
 Home-page: https://EasyMCDM.github.io/
 Author: Yanis Labrak & Others
@@ -10,7 +10,7 @@ Description: [![PyPI version](https://badge.fury.io/py/EasyMCDM.svg)](https://ba
         [![GitHub Issues](https://img.shields.io/github/issues/qanastek/EasyMCDM.svg)](https://github.com/qanastek/EasyMCDM/issues)
         [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
         [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
-        <!-- [![Downloads](https://static.pepy.tech/personalized-badge/EasyMCDM?period=total&units=international_system&left_color=grey&right_color=orange&left_text=Downloads)](https://pepy.tech/project/EasyMCDM) -->
+        [![Downloads](https://static.pepy.tech/personalized-badge/EasyMCDM?period=total&units=international_system&left_color=grey&right_color=orange&left_text=Downloads)](https://pepy.tech/project/EasyMCDM)
         
         # EasyMCDM - Quick Installation methods
         
@@ -176,6 +176,8 @@ Description: [![PyPI version](https://badge.fury.io/py/EasyMCDM.svg)](https://ba
         
         ## Instant-Runoff Multicriteria Optimization (IRMO)
         
+        **Short description** : Eliminate the worst individual for each criteria, until we reach the last one and select the best one.
+        
         ```python
         from EasyMCDM.models.Irmo import Irmo
         
@@ -192,7 +194,6 @@ Description: [![PyPI version](https://badge.fury.io/py/EasyMCDM.svg)](https://ba
         ```python
         {'best': 'saab_tid'}
         ```
-        
         
         # List of methods available
         

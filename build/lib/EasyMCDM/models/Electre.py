@@ -129,10 +129,10 @@ class Electre(MCDM):
             self.weights = weights
         
         # Check if the lengths matches togethers
-        assert len(self.weights) == self.constraints_length, MCDM.FAIL + "The number of weights as a variable length, please give a consistent length with the matrix constraints !" + MCDM.ENDC
+        assert len(self.weights) == self.constraints_length, '\033[91m' + "The number of weights as a variable length, please give a consistent length with the matrix constraints !" + '\033[0m'
 
         # Check variable types
-        assert all(isinstance(e, (int, float)) for e in self.weights), MCDM.FAIL + "The weights as variable types, please give only integers and float !" + MCDM.ENDC
+        assert all(isinstance(e, (int, float)) for e in self.weights), '\033[91m' + "The weights as variable types, please give only integers and float !" + '\033[0m'
 
         # Get preferences
         if type(prefs) == str:
@@ -141,13 +141,13 @@ class Electre(MCDM):
             self.preferences = prefs
 
         # Check if has preferences other than max and min 
-        assert sorted(list(set(self.preferences))) == ['max', 'min'], MCDM.FAIL + "The preferences need to containt only min and max. Found : " + str(sorted(list(set(self.preferences)))) + MCDM.ENDC
+        assert all([a in ['max', 'min'] for a in sorted(list(set(self.preferences)))]), '\033[91m' + "The preferences need to containt only min and max. Found : " + str(sorted(list(set(self.preferences)))) + '\033[0m'
         
         # Check if the lengths matches togethers
-        assert len(self.preferences) == self.constraints_length, MCDM.FAIL + "The preferences data as a variable length, please give a consistent length with the matrix constraints !" + MCDM.ENDC
-        assert len(vetoes) == self.constraints_length, MCDM.FAIL + "The vetoes data as a variable length, please give a consistent length with the matrix constraints !" + MCDM.ENDC
+        assert len(self.preferences) == self.constraints_length, '\033[91m' + "The preferences data as a variable length, please give a consistent length with the matrix constraints !" + '\033[0m'
+        assert len(vetoes) == self.constraints_length, '\033[91m' + "The vetoes data as a variable length, please give a consistent length with the matrix constraints !" + '\033[0m'
         if (preference_thresholds != None):
-            assert len(preference_thresholds) == self.constraints_length, MCDM.FAIL + "The preference thresholds data as a variable length, please give a consistent length with the matrix constraints !" + MCDM.ENDC
+            assert len(preference_thresholds) == self.constraints_length, '\033[91m' + "The preference thresholds data as a variable length, please give a consistent length with the matrix constraints !" + '\033[0m'
 
         # Compute the matrices
         (concordance_matrix, non_discondance_matrix, result_matrix) = \
