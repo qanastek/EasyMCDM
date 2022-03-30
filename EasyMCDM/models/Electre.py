@@ -71,7 +71,7 @@ class Electre(MCDM):
                     diff = abs(b[idx] - a[idx])
                     
                     # NOTE: ELECTRE I-v
-                    points = w
+                    points = 0.0 if diff != 0 else w
 
                     # NOTE: ELECTRE I-s
                     if (preference_thresholds != None):
