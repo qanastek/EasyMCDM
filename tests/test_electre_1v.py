@@ -29,7 +29,7 @@ class TestElectre1v(unittest.TestCase):
         indifference_threshold = 0.79
         results = e.solve(weights, prefs, vetoes, indifference_threshold, preference_thresholds)
         self.assertEqual(
-            ['A1', 'A2', 'A4', 'A5'],
+            ['A2', 'A4', 'A5'],
             results['kernels']
         )
 

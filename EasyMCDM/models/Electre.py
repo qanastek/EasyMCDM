@@ -41,7 +41,7 @@ class Electre(MCDM):
         return
 
     def __get_electre1_matrices__(self, weights, preferences, vetoes, indifference_threshold, preference_thresholds):
-        size = self.constraints_length
+        size = len(self.names)
 
         concordance_matrix = [[0] * size for _ in range(size)]
         non_discondance_matrix = [[0] * size for _ in range(size)]
@@ -71,7 +71,7 @@ class Electre(MCDM):
                     diff = abs(b[idx] - a[idx])
                     
                     # NOTE: ELECTRE I-v
-                    points = 0.0
+                    points = 0.0 if diff != 0 else w
 
                     # NOTE: ELECTRE I-s
                     if (preference_thresholds != None):
@@ -99,10 +99,11 @@ class Electre(MCDM):
         return (concordance_matrix, non_discondance_matrix, result_matrix)
 
     def __get_kernels__(self, result_matrix):
+        size = len(self.names)
         kernels = []
-        for y in range(self.constraints_length):
+        for y in range(size):
             is_kernel = True
-            for x in range(self.constraints_length):
+            for x in range(size):
                 if ((result_matrix[x][y] != 'x') and (result_matrix[x][y])):
                     is_kernel = False
                     break
@@ -127,7 +128,7 @@ class Electre(MCDM):
             self.weights = self.get_weights(weights)[weights_idx]
         elif type(weights) == list:
             self.weights = weights
-        
+
         # Check if the lengths matches togethers
         assert len(self.weights) == self.constraints_length, '\033[91m' + "The number of weights as a variable length, please give a consistent length with the matrix constraints !" + '\033[0m'
 
