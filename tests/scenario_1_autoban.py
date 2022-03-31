@@ -39,7 +39,7 @@ if __name__ == "__main__":
     re = e.solve(weights, prefs, vetoes, indifference_threshold, preference_thresholds)
     rpr = pr.solve(weights=weights, prefs=prefs)
     rpa = pa.solve(indexes=criteria_idx, prefs=criteria_prefs)
-    rw = w.solve(pref_indexes=criteria_idx, prefs=criteria_prefs, weights=criteria_weights, target='min')
+    rw = w.solve(pref_indexes=criteria_idx, prefs=criteria_prefs, weights=criteria_weights, target='max')
 
     print(re)
     print(rpr)
