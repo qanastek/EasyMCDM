@@ -19,17 +19,16 @@ class Electre(MCDM):
     def __print_electre__(
         self, 
         concordance_matrix, 
-        non_discondance_matrix, 
+        non_discordance_matrix, 
         result_matrix, 
         kernels,
     ):
-        print()
         for x in range(len(concordance_matrix)):
             print('\t'.join(["{:1.3f}".format(y) if y != 'x' else y for y in concordance_matrix[x]]))
 
         print()
-        for x in range(len(non_discondance_matrix)):
-            print('\t'.join(["{:1.3f}".format(y) if y != 'x' else y for y in non_discondance_matrix[x]]))
+        for x in range(len(non_discordance_matrix)):
+            print('\t'.join(["{:1.3f}".format(y) if y != 'x' else y for y in non_discordance_matrix[x]]))
 
         print()
         for x in range(len(result_matrix)):
@@ -40,11 +39,11 @@ class Electre(MCDM):
         
         return
 
-    def __get_electre1_matrices__(self, weights, preferences, vetoes, indifference_threshold, preference_thresholds):
+    def __get_electre1_matrices__(self, weights, preferences, vetoes, concordance_threshold, preference_thresholds):
         size = len(self.names)
 
         concordance_matrix = [[0] * size for _ in range(size)]
-        non_discondance_matrix = [[0] * size for _ in range(size)]
+        non_discordance_matrix = [[0] * size for _ in range(size)]
         result_matrix = [[0] * size for _ in range(size)]
 
         # TODO: 
@@ -53,7 +52,7 @@ class Electre(MCDM):
         for x in range(size):
             for y in range(x, size):
                 if (x == y):
-                    concordance_matrix[x][y] = non_discondance_matrix[x][y] = result_matrix[x][y] = 'x'
+                    concordance_matrix[x][y] = non_discordance_matrix[x][y] = result_matrix[x][y] = 'x'
                     continue
                 
                 a = data[x]
@@ -89,14 +88,14 @@ class Electre(MCDM):
                         a_are_vetoes_respected = ((a_are_vetoes_respected) and diff < v)
 
                 concordance_matrix[x][y] = av
-                non_discondance_matrix[x][y] = (1 if a_are_vetoes_respected else 0)
-                result_matrix[x][y] = (av > indifference_threshold) and (a_are_vetoes_respected)
+                non_discordance_matrix[x][y] = (1 if a_are_vetoes_respected else 0)
+                result_matrix[x][y] = (av > concordance_threshold) and (a_are_vetoes_respected)
                 
                 concordance_matrix[y][x] = bv
-                non_discondance_matrix[y][x] = (1 if b_are_vetoes_respected else 0)
-                result_matrix[y][x] = (bv > indifference_threshold) and (b_are_vetoes_respected)
+                non_discordance_matrix[y][x] = (1 if b_are_vetoes_respected else 0)
+                result_matrix[y][x] = (bv > concordance_threshold) and (b_are_vetoes_respected)
 
-        return (concordance_matrix, non_discondance_matrix, result_matrix)
+        return (concordance_matrix, non_discordance_matrix, result_matrix)
 
     def __get_kernels__(self, result_matrix):
         size = len(self.names)
@@ -118,7 +117,7 @@ class Electre(MCDM):
         weights : Union[str, list],
         prefs : Union[str, List[str]],
         vetoes : List, 
-        indifference_threshold : List, 
+        concordance_threshold : List, 
         preference_thresholds : List,
         weights_idx : int = 0,
     ) -> Dict:
@@ -151,8 +150,8 @@ class Electre(MCDM):
             assert len(preference_thresholds) == self.constraints_length, '\033[91m' + "The preference thresholds data as a variable length, please give a consistent length with the matrix constraints !" + '\033[0m'
 
         # Compute the matrices
-        (concordance_matrix, non_discondance_matrix, result_matrix) = \
-            self.__get_electre1_matrices__(weights, prefs, vetoes, indifference_threshold, preference_thresholds)
+        (concordance_matrix, non_discordance_matrix, result_matrix) = \
+            self.__get_electre1_matrices__(weights, prefs, vetoes, concordance_threshold, preference_thresholds)
 
         # Compute the graph kernels
         kernels = self.__get_kernels__(result_matrix)
@@ -161,7 +160,7 @@ class Electre(MCDM):
         if (self.verbose):
             self.__print_electre__(
                 concordance_matrix, 
-                non_discondance_matrix, 
+                non_discordance_matrix, 
                 result_matrix, 
                 kernels,
             )

@@ -21,14 +21,17 @@ if __name__ == "__main__":
         "cit_xsara":    [19084.0, 182.0, 6.4, 40.6, 8.0, 408.0, 33.5], 
         "rnlt_safrane": [29160.0, 203.0, 7.5, 34.5, 1.0, 520.0, 32.0]
     }
-    criteria_idx =          [    5,     3,     6,     0]
-    criteria_prefs =        ["min", "min", "max", "min"]
-    criteria_weights =      [ 0.40,  0.20,  0.15,  0.10]
+    # criteria_idx =          [    4,     2,     0]
+    # criteria_prefs =        ["min", "min", "min"]
+    # criteria_weights =      [ 0.25,  0.25,  0.5]
+    criteria_idx =          [    4,     2,     5]
+    criteria_prefs =        ["min", "min", "max"]
+    criteria_weights =      [ 0.55,  0.25,  0.20]
     weights =               [   0.10,  0.05,  0.05,  0.15,  0.05,  0.20,  0.40]
     prefs =                 [  "min", "max", "min", "min", "min", "max", "min"]
-    vetoes =                [1250.00,  3.50,  0.50,  1.50,  1.50, 35.00,  1.00]
-    preference_thresholds = [2750.00,  7.50,  0.80,  2.25,  2.50, 45.00,  1.25]
-    indifference_threshold = 0.6
+    preference_thresholds = [1250.00,  3.50,  0.50,  1.50,  1.00, 35.00,  1.00]
+    vetoes =                [27500.00,  70.50,  10.80,  20.25,  10.50, 65.00,  10.25]
+    concordance_threshold = 0.6
 
     verbose = True
     w = WeightedSum(data=data, verbose=verbose)
@@ -36,9 +39,39 @@ if __name__ == "__main__":
     pr = Promethee(data=data, verbose=verbose)
     e = Electre(data=data, verbose=verbose)
 
-    re = e.solve(weights, prefs, vetoes, indifference_threshold, preference_thresholds)
-    rpr = pr.solve(weights=weights, prefs=prefs)
-    rpa = pa.solve(indexes=criteria_idx, prefs=criteria_prefs)
-    rw = w.solve(pref_indexes=criteria_idx, prefs=criteria_prefs, weights=criteria_weights, target='min')
-
-    results = e.solve(weights, prefs, vetoes, indifference_threshold, preference_thresholds)
+    # print()
+    # print()
+    # print()
+    # print('#'*79)
+    # print('[PARETO]')
+    # print('#'*79)
+    # result = pa.solve(indexes=criteria_idx, prefs=criteria_prefs)
+    # print(result)
+    # print('#'*79)
+    # print()
+    # print()
+    # print()
+    # print('#'*79)
+    # print('[WEIGHED SUM]')
+    # print('#'*79)
+    # result = w.solve(pref_indexes=criteria_idx, prefs=criteria_prefs, weights=criteria_weights, target='min')
+    # print(result)
+    # print('#'*79)
+    # print()
+    # print()
+    # print()
+    # print('#'*79)
+    # print('[PROMETHEE]')
+    # print('#'*79)
+    # result = pr.solve(weights=weights, prefs=prefs)
+    # print(result)
+    # print('#'*79)
+    print()
+    print()
+    print()
+    print('#'*79)
+    print('[ELECTRE]')
+    print('#'*79)
+    result = e.solve(weights, prefs, vetoes, concordance_threshold, preference_thresholds)
+    # print(result)
+    print('#'*79)
