@@ -14,7 +14,7 @@ class Pareto(MCDM):
         assert len(indexes) == self.nbr_items, "Indexes and preferences length aren't the sames!"
 
         # Result : dominance dictonnary
-        self.dominance = {c : {"Weakly-dominated-by":[], "Dominated-by":[]} for c in self.matrix}
+        self.dominance = {c : {"Dominated-by":[], "Strongly-Dominated-by":[]} for c in self.matrix}
         
         # Get all pairs of candidate
         cndt_pairs = combinations(self.matrix,2)
@@ -52,18 +52,18 @@ class Pareto(MCDM):
 
             # If Candidate 2 dominated
             if nbCritDominatedCndt1 + nbCritEquals == self.nbr_items:
-                self.dominance[cndt2]['Weakly-dominated-by'].append(cndt1)
+                self.dominance[cndt2]['Dominated-by'].append(cndt1)
 
                 # If candidate 2 very dominated
                 if nbCritDominatedCndt1 == self.nbr_items:
-                    self.dominance[cndt2]['Dominated-by'].append(cndt1)
+                    self.dominance[cndt2]['Strongly-Dominated-by'].append(cndt1)
 
             # If Candidate 1 dominated
             elif nbCritDominatedCndt2 + nbCritEquals == self.nbr_items: 
-                self.dominance[cndt1]['Weakly-dominated-by'].append(cndt2)
+                self.dominance[cndt1]['Dominated-by'].append(cndt2)
 
                 # If Candidate 1 very dominated
                 if nbCritDominatedCndt2 == self.nbr_items:
-                    self.dominance[cndt1]['Dominated-by'].append(cndt2)
+                    self.dominance[cndt1]['Strongly-Dominated-by'].append(cndt2)
 
         return self.dominance
