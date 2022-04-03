@@ -24,7 +24,8 @@ class Electre(MCDM):
         non_discordance_matrix, 
         result_matrix, 
         kernels,
-        robustness_analysis_kernels: dict,
+        robustness_analysis_results: dict,
+        frequent_kernels: dict,
     ):
         for x in range(len(concordance_matrix)):
             print('\t'.join(["{:1.3f}".format(y) if y != 'x' else y for y in concordance_matrix[x]]))
@@ -42,15 +43,37 @@ class Electre(MCDM):
 
         print()
         print('Robustness Analysis:')
-        occurences = Counter()
-        for key in robustness_analysis_kernels.keys():
-            occurences.update(robustness_analysis_kernels[key])
-            print('[{:0.3f}] = {}'.format(key, ', '.join(robustness_analysis_kernels[key])))
+        print('\n'.join(robustness_analysis_results))
         
         print()
         print('Most Frequent Kernels:')
-        print(', '.join(['{} ({})'.format(item, occ) for item, occ in occurences.most_common()]))
+        print(', '.join(frequent_kernels))
         return
+
+    def __robustness_analysis__(self, concordance_matrix, non_discordance_matrix):
+        robustness_analysis_kernels = {}
+        for threshold in np.arange(0.5, 1.0, 0.025):
+            # Compute outranking matrix from concordance and non-discordance
+            outranking_matrix = self.__get_outranking_matrix__(
+                concordance_matrix, non_discordance_matrix, threshold)
+
+            # Compute the graph kernels
+            robustness_analysis_kernels[threshold] = self.__get_kernels__(outranking_matrix)
+
+        analysis_results = []
+        ordered_candidates = []
+
+        occurences = Counter()
+        for key in robustness_analysis_kernels.keys():
+            occurences.update(robustness_analysis_kernels[key])
+            analysis_results.append(
+                '[{:0.3f}] = {}'.format(key, ', '.join(robustness_analysis_kernels[key]))
+            )
+        
+        ordered_candidates = ['{} ({})'.format(item, occ) for item, occ in occurences.most_common()]
+
+        return (analysis_results, ordered_candidates)
+
 
     def __get_electre1_matrices__(self, weights, preferences, vetoes, preference_thresholds):
         size = len(self.names)
@@ -150,7 +173,6 @@ class Electre(MCDM):
         concordance_threshold : List, 
         preference_thresholds : List,
         weights_idx : int = 0,
-        robustness_analysis : bool = True
     ) -> Dict:
 
         # Define the weights of the attributes
@@ -191,15 +213,9 @@ class Electre(MCDM):
         # Compute the graph kernels
         kernels = self.__get_kernels__(outranking_matrix)
 
-        robustness_analysis_kernels = {}
-        if (robustness_analysis):
-            for threshold in np.arange(0.5, 1.0, 0.025):
-                # Compute outranking matrix from concordance and non-discordance
-                outranking_matrix = self.__get_outranking_matrix__(
-                    concordance_matrix, non_discordance_matrix, threshold)
-
-                # Compute the graph kernels
-                robustness_analysis_kernels[threshold] = self.__get_kernels__(outranking_matrix)
+        # Perform robustness analysis
+        robustness_analysis_results, frequent_kernels = \
+            self.__robustness_analysis__(concordance_matrix, non_discordance_matrix)
 
         # Display the matrices
         if (self.verbose):
@@ -208,10 +224,11 @@ class Electre(MCDM):
                 non_discordance_matrix, 
                 outranking_matrix, 
                 kernels,
-                robustness_analysis_kernels,
+                robustness_analysis_results,
+                frequent_kernels,
             )
 
         return {
             "kernels": kernels,
-            "robustness_analysis_kernels": robustness_analysis_kernels
+            "frequent_kernels": frequent_kernels
         }
