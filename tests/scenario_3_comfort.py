@@ -24,7 +24,7 @@ if __name__ == "__main__":
     criteria_idx =          [    4,     2,     5]
     criteria_prefs =        ["min", "min", "max"]
     weight_idx =            [      0,     1,     2,     3,     4,     5,     6]
-    weights =               [   0.05, 0.025,  0.25,  0.05,  0.40,  0.20,  0.025]
+    weights =               [   0.15, 0.025,  0.225,  0.10,  0.30,  0.175,  0.025]
     prefs =                 [  "min", "max", "min", "min", "min", "max", "min"]
     # preference_thresholds = None
     preference_thresholds = [4500.00, 8.50, 1.50, 1.50, 3.00, 75.00,  2.50]
