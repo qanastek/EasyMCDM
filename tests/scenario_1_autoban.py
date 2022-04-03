@@ -25,10 +25,9 @@ if __name__ == "__main__":
     criteria_prefs =        [   "max", "min", "min"                             ]
     criteria_weights =      [   0.70,   0.10, 0.20                              ]
     weights =               [   0.00,  0.70,  0.00, 0.10, 0.00, 0.00, 0.20      ]
-    weights =               [   0.00,  0.70,  0.00, 0.10, 0.00, 0.00, 0.20      ]
     prefs =                 [   "min", "max", "min", "min", "min", "max", "min" ]
-    preference_thresholds = [   0.00,   8.00, 0.00, 2.50, 0.00, 0.00, 3.00   ]
-    vetoes =                [   0.00,  10.00, 0.00, 4.00, 0.00, 0.00, 1.50  ]
+    preference_thresholds = [   50000.00,  2.00, 50000.00, 2.50, 50000.00, 0.00, 2.00   ]
+    vetoes =                [   50000.00,  0.50, 50000.00, 4.00, 50000.00, 0.00, 1.50  ]
     indifference_threshold = 0.9
 
     verbose = True
