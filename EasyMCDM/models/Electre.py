@@ -1,4 +1,6 @@
+import numpy as np
 from typing import Dict, List, Union
+from collections import Counter
 
 from EasyMCDM.models.MCDM import MCDM
 
@@ -22,6 +24,7 @@ class Electre(MCDM):
         non_discordance_matrix, 
         result_matrix, 
         kernels,
+        robustness_analysis_kernels: dict,
     ):
         for x in range(len(concordance_matrix)):
             print('\t'.join(["{:1.3f}".format(y) if y != 'x' else y for y in concordance_matrix[x]]))
@@ -36,22 +39,31 @@ class Electre(MCDM):
 
         print()
         print(kernels)
+
+        print()
+        print('Robustness Analysis:')
+        occurences = Counter()
+        for key in robustness_analysis_kernels.keys():
+            occurences.update(robustness_analysis_kernels[key])
+            print('[{:0.3f}] = {}'.format(key, ', '.join(robustness_analysis_kernels[key])))
         
+        print()
+        print('Most Frequent Kernels:')
+        print(', '.join(['{} ({})'.format(item, occ) for item, occ in occurences.most_common()]))
         return
 
-    def __get_electre1_matrices__(self, weights, preferences, vetoes, concordance_threshold, preference_thresholds):
+    def __get_electre1_matrices__(self, weights, preferences, vetoes, preference_thresholds):
         size = len(self.names)
 
         concordance_matrix = [[0] * size for _ in range(size)]
         non_discordance_matrix = [[0] * size for _ in range(size)]
-        result_matrix = [[0] * size for _ in range(size)]
 
         data = list(self.matrix.values())
 
         for x in range(size):
             for y in range(x, size):
                 if (x == y):
-                    concordance_matrix[x][y] = non_discordance_matrix[x][y] = result_matrix[x][y] = 'x'
+                    concordance_matrix[x][y] = non_discordance_matrix[x][y] = 'x'
                     continue
                 
                 a = data[x]
@@ -88,13 +100,30 @@ class Electre(MCDM):
 
                 concordance_matrix[x][y] = av
                 non_discordance_matrix[x][y] = (1 if a_are_vetoes_respected else 0)
-                result_matrix[x][y] = (av > concordance_threshold) and (a_are_vetoes_respected)
                 
                 concordance_matrix[y][x] = bv
                 non_discordance_matrix[y][x] = (1 if b_are_vetoes_respected else 0)
-                result_matrix[y][x] = (bv > concordance_threshold) and (b_are_vetoes_respected)
 
-        return (concordance_matrix, non_discordance_matrix, result_matrix)
+        return (concordance_matrix, non_discordance_matrix)
+
+    def __get_outranking_matrix__(self, concordance_matrix, non_discordance_matrix, concordance_threshold):
+        size = len(self.names)
+        outranking_matrix = [[0] * size for _ in range(size)]
+
+        for x in range(size):
+            for y in range(x, size):
+                if (x == y):
+                    outranking_matrix[x][y] = 'x'
+                    continue
+                
+                ac = concordance_matrix[x][y]
+                av = non_discordance_matrix[x][y]
+                bc = concordance_matrix[y][x]
+                bv = non_discordance_matrix[y][x]
+                outranking_matrix[x][y] = (ac > concordance_threshold) and (av)
+                outranking_matrix[y][x] = (bc > concordance_threshold) and (bv)
+
+        return outranking_matrix
 
     def __get_kernels__(self, result_matrix):
         size = len(self.names)
@@ -121,6 +150,7 @@ class Electre(MCDM):
         concordance_threshold : List, 
         preference_thresholds : List,
         weights_idx : int = 0,
+        robustness_analysis : bool = True
     ) -> Dict:
 
         # Define the weights of the attributes
@@ -151,21 +181,37 @@ class Electre(MCDM):
             assert len(preference_thresholds) == self.constraints_length, '\033[91m' + "The preference thresholds data as a variable length, please give a consistent length with the matrix constraints !" + '\033[0m'
 
         # Compute the matrices
-        (concordance_matrix, non_discordance_matrix, result_matrix) = \
-            self.__get_electre1_matrices__(weights, prefs, vetoes, concordance_threshold, preference_thresholds)
+        (concordance_matrix, non_discordance_matrix) = \
+            self.__get_electre1_matrices__(weights, prefs, vetoes, preference_thresholds)
+
+        # Compute outranking matrix from concordance and non-discordance
+        outranking_matrix = self.__get_outranking_matrix__(
+            concordance_matrix, non_discordance_matrix, concordance_threshold)
 
         # Compute the graph kernels
-        kernels = self.__get_kernels__(result_matrix)
+        kernels = self.__get_kernels__(outranking_matrix)
+
+        robustness_analysis_kernels = {}
+        if (robustness_analysis):
+            for threshold in np.arange(0.5, 1.0, 0.025):
+                # Compute outranking matrix from concordance and non-discordance
+                outranking_matrix = self.__get_outranking_matrix__(
+                    concordance_matrix, non_discordance_matrix, threshold)
+
+                # Compute the graph kernels
+                robustness_analysis_kernels[threshold] = self.__get_kernels__(outranking_matrix)
 
         # Display the matrices
         if (self.verbose):
             self.__print_electre__(
                 concordance_matrix, 
                 non_discordance_matrix, 
-                result_matrix, 
+                outranking_matrix, 
                 kernels,
+                robustness_analysis_kernels,
             )
 
         return {
             "kernels": kernels,
+            "robustness_analysis_kernels": robustness_analysis_kernels
         }

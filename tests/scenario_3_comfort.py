@@ -21,12 +21,8 @@ if __name__ == "__main__":
         "alfa_156":     [23817.0, 201.0, 8.0, 39.6, 6.0, 378.0, 31.2], 
         "cit_xsara":    [19084.0, 182.0, 6.4, 40.6, 8.0, 408.0, 33.5], 
     }
-    # criteria_idx =          [    4,     2,     0]
-    # criteria_prefs =        ["min", "min", "min"]
-    # criteria_weights =      [ 0.25,  0.25,  0.5]
     criteria_idx =          [    4,     2,     5]
     criteria_prefs =        ["min", "min", "max"]
-    criteria_weights =      [ 0.55,  0.25,  0.20]
     weight_idx =            [      0,     1,     2,     3,     4,     5,     6]
     weights =               [   0.10,  0.00,  0.25,  0.05,  0.40,  0.20,  0.00]
     prefs =                 [  "min", "max", "min", "min", "min", "max", "min"]
@@ -57,23 +53,23 @@ if __name__ == "__main__":
     # result = pa.solve(indexes=criteria_idx, prefs=criteria_prefs)
     # print(result)
     # print('#'*79)
-    print()
-    print()
-    print()
-    print('#'*79)
-    print('[WEIGHED SUM]')
-    print('#'*79)
-    result = w.solve(pref_indexes=weight_idx, prefs=prefs, weights=weights, target='min')
-    print(result)
-    print('#'*79)
-    print()
-    print()
-    print()
-    print('#'*79)
-    print('[PROMETHEE]')
-    print('#'*79)
-    result = pr.solve(weights=weights, prefs=prefs)
-    print('#'*79)
+    # print()
+    # print()
+    # print()
+    # print('#'*79)
+    # print('[WEIGHED SUM]')
+    # print('#'*79)
+    # result = w.solve(pref_indexes=weight_idx, prefs=prefs, weights=weights, target='max')
+    # print(result)
+    # print('#'*79)
+    # print()
+    # print()
+    # print()
+    # print('#'*79)
+    # print('[PROMETHEE]')
+    # print('#'*79)
+    # result = pr.solve(weights=weights, prefs=prefs)
+    # print('#'*79)
     print()
     print()
     print()
