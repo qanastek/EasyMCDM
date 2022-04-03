@@ -46,7 +46,6 @@ class Electre(MCDM):
         non_discordance_matrix = [[0] * size for _ in range(size)]
         result_matrix = [[0] * size for _ in range(size)]
 
-        # TODO: 
         data = list(self.matrix.values())
 
         for x in range(size):
