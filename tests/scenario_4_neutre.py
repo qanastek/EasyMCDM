@@ -55,6 +55,6 @@ if __name__ == "__main__":
     print("#"*50)
     
     print("WSUM")
-    res = w.solve(pref_indexes=criteria_idx, prefs=criteria_prefs, weights=criteria_weights, target='max')
+    res = w.solve(pref_indexes=criteria_idx, prefs=criteria_prefs, weights=criteria_weights, target='min')
     print(res)
     print("#"*50)

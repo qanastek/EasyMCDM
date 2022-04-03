@@ -17,36 +17,36 @@ class TestWeightedSumMethods(unittest.TestCase):
         )
 
         self.assertEqual(
-            'cit_xsara',
+            'peugeot_406',
             res[9][1]
         )
 
         res = p.solve(pref_indexes=[1],prefs=["max"], weights=[1], target='max')
 
         self.assertEqual(
-            'bmw_320d',
+            'cit_xsara',
             res[0][1]
         )
 
         self.assertEqual(
-            'cit_xsara',
+            'bmw_320d',
             res[9][1]
         )
 
         res = p.solve(pref_indexes=[0,1],prefs=["min","max"], weights=[1,1], target='max')
 
         self.assertEqual(
-            'cit_xsara',
+            'peugeot_406',
             res[0][1]
         )
 
         self.assertEqual(
-            'bmw_320d',
+            'alfa_156',
             res[8][1]
         )
 
         self.assertEqual(
-            'rnlt_safrane',
+            'bmw_320d',
             res[9][1]
         )
 
