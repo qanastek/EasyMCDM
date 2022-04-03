@@ -1,4 +1,7 @@
 from typing import Dict, List, Tuple, Union
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 
 class MCDM(object):
 
@@ -6,7 +9,13 @@ class MCDM(object):
     __slots__ = ['verbose', 'matrix', 'names', 'weights', 'preferences', 'promethee_matrix', 'constraints_length', 'col_sep', 'row_sep']
 
     # Constructor
-    def __init__(self, data : Union[str, dict], col_sep=',', row_sep='\n', verbose=True):
+    def __init__(self, data : Union[str, dict], col_sep=',', row_sep='\n', verbose=True, normalize=False, standardize=False):
+
+        if (standardize):
+            self.scaler = StandardScaler()
+        elif(normalize):
+            self.scaler = MinMaxScaler()
+
 
         # Line & column separator
         self.col_sep, self.row_sep = col_sep, row_sep
@@ -40,6 +49,11 @@ class MCDM(object):
 
         # Number of constraints
         self.constraints_length = len(list(self.matrix.values())[0])
+
+        if (standardize or normalize):
+            self.scaled_matrix = self.scaler.fit_transform([np.array(val) for val in self.matrix.values()])
+
+
 
     # Check data length consistency
     def check_consistency_dict(self, m):
