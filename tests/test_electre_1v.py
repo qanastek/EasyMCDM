@@ -44,7 +44,7 @@ class TestElectre1v(unittest.TestCase):
         weights =   [0.3, 0.2, 0.2, 0.1, 0.2]
         prefs =     ["min", "min", "max", "max", "max"]
         vetoes =    [210, 18, 16, 5.5, 3.5]
-        concordance_threshold = 0.65
+        concordance_threshold = 0.85
         preference_thresholds = None
 
         e = Electre(data=data, verbose=True)

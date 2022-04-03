@@ -100,15 +100,17 @@ class Electre(MCDM):
     def __get_kernels__(self, result_matrix):
         size = len(self.names)
         kernels = []
-        for y in range(size):
+        for col in range(size):
+            # print('> Processing candidate \'{}\'...'.format(self.names[col]))
             is_kernel = True
-            for x in range(size):
-                if ((result_matrix[x][y] != 'x') and (result_matrix[x][y])):
+            for row in range(size):
+                if ((result_matrix[row][col] != 'x') and (result_matrix[row][col])):
+                    # print('> Outranking found at [{}, {}]!'.format(row, col))
                     is_kernel = False
                     break
 
             if (is_kernel):
-                kernels.append(self.names[y])
+                kernels.append(self.names[col])
         return kernels
 
     # Solve the problem

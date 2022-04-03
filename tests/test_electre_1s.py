@@ -69,12 +69,5 @@ class TestElectre1s(unittest.TestCase):
             results['kernels']
         )
 
-        # concordance_threshold = 0.8
-        # results = e.solve(weights, prefs, vetoes, concordance_threshold, preference_thresholds)
-        # self.assertEqual(
-        #     ['A2', 'A3', 'A4', 'A5', 'A6'],
-        #     results['kernels']
-        # )
-
 if __name__ == '__main__':
     unittest.main()
