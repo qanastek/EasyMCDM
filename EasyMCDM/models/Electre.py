@@ -52,7 +52,7 @@ class Electre(MCDM):
 
     def __robustness_analysis__(self, concordance_matrix, non_discordance_matrix):
         robustness_analysis_kernels = {}
-        for threshold in np.arange(0.5, 1.0, 0.025):
+        for threshold in np.arange(0.5, 1.025, 0.025):
             # Compute outranking matrix from concordance and non-discordance
             outranking_matrix = self.__get_outranking_matrix__(
                 concordance_matrix, non_discordance_matrix, threshold)
