@@ -24,16 +24,16 @@ if __name__ == "__main__":
     criteria_idx =          [    4,     2,     5]
     criteria_prefs =        ["min", "min", "max"]
     weight_idx =            [      0,     1,     2,     3,     4,     5,     6]
-    weights =               [   0.10,  0.00,  0.25,  0.05,  0.40,  0.20,  0.00]
+    weights =               [   0.05, 0.025,  0.25,  0.05,  0.40,  0.20,  0.025]
     prefs =                 [  "min", "max", "min", "min", "min", "max", "min"]
     # preference_thresholds = None
-    preference_thresholds = [ 7500.00,  0.00, 1.75, 1.50, 3.00, 55.00,  0.00]
+    preference_thresholds = [4500.00, 8.50, 1.50, 1.50, 3.00, 75.00,  2.50]
     # Respected vetos indicate non-discordance, which means more outranking and smaller kernels.
     #   - Raise vetos for positive (desirable) criteria.
     # Broken vetos indicate discordance and absense of outranking, which means less outranking and larger kernels.
     #   - Lower vetos for negative (undesirable) criteria.
     # Vetos regulate discordance (broken) or non-discordance (respected).
-    vetoes =                [11000.00,  0.00, 2.00, 4.00, 5.00, 85.00, 0.00]
+    vetoes =                [7500.00, 10.00, 2.00, 2.00, 4.00, 85.00, 3.75]
     # Lower concordance tresholds and/or smaller vetos (less 1s), lead to less outranking (links in graph) and larger kernels.
     # Higher concordance tresholds and larger vetos (more 1s), lead to more outranking (links in graph) and smaller kernels.
     concordance_threshold = 0.75
@@ -44,32 +44,32 @@ if __name__ == "__main__":
     pr = Promethee(data=data, verbose=verbose)
     e  = Electre(data=data, verbose=verbose)
 
-    # print()
-    # print()
-    # print()
-    # print('#'*79)
-    # print('[PARETO]')
-    # print('#'*79)
-    # result = pa.solve(indexes=criteria_idx, prefs=criteria_prefs)
-    # print(result)
-    # print('#'*79)
-    # print()
-    # print()
-    # print()
-    # print('#'*79)
-    # print('[WEIGHED SUM]')
-    # print('#'*79)
-    # result = w.solve(pref_indexes=weight_idx, prefs=prefs, weights=weights, target='max')
-    # print(result)
-    # print('#'*79)
-    # print()
-    # print()
-    # print()
-    # print('#'*79)
-    # print('[PROMETHEE]')
-    # print('#'*79)
-    # result = pr.solve(weights=weights, prefs=prefs)
-    # print('#'*79)
+    print()
+    print()
+    print()
+    print('#'*79)
+    print('[PARETO]')
+    print('#'*79)
+    result = pa.solve(indexes=criteria_idx, prefs=criteria_prefs)
+    print(result)
+    print('#'*79)
+    print()
+    print()
+    print()
+    print('#'*79)
+    print('[WEIGHED SUM]')
+    print('#'*79)
+    result = w.solve(pref_indexes=weight_idx, prefs=prefs, weights=weights, target='max')
+    print(result)
+    print('#'*79)
+    print()
+    print()
+    print()
+    print('#'*79)
+    print('[PROMETHEE]')
+    print('#'*79)
+    result = pr.solve(weights=weights, prefs=prefs)
+    print('#'*79)
     print()
     print()
     print()
