@@ -47,7 +47,7 @@ class WeightedSum(MCDM):
         labels = [keys[index] for index in argres]
         scores = [(rank, key, score) for key, score, rank in zip(labels, res, ranks)]
 
-        if "max" in target:
+        if "min" in target:
             scores.reverse()
 
         return scores
