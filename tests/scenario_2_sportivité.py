@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
     indifference_threshold = 0.5
 
-    verbose = False
+    verbose = True
     w = WeightedSum(data=data, verbose=verbose)
     pa = Pareto(data=data, verbose=verbose)
     pr = Promethee(data=data, verbose=verbose)

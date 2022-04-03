@@ -22,16 +22,16 @@ if __name__ == "__main__":
         "rnlt_safrane": [29160.0, 203.0, 7.5, 34.5, 1.0, 520.0, 32.0]
     }
 
-    weights =               [   0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14]
+    weights =               [   0.15, 0.20, 0.10, 0.15, 0.10, 0.10, 0.20]
     prefs =                 [  "min", "max", "min", "min", "min", "max", "min"]
-    vetoes =                [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    preference_thresholds = [11000.00, 30.00, 7.00, 8.00, 4.00, 145.00, 3.00]
+    vetoes =                [8000.00, 10.00, 2.00, 6.30, 4.50, 120.00, 2.00]
+    preference_thresholds = [6000.00, 30.00, 1.50, 6.30, 4.00, 100.00, 4.00]
 
     criteria_idx =          [i for i in range(0, len(weights))]
     criteria_prefs =        prefs
     criteria_weights =      weights
 
-    indifference_threshold = 0.50
+    indifference_threshold = 0.5
 
     verbose = True
     w = WeightedSum(data=data, verbose=verbose)
@@ -55,6 +55,6 @@ if __name__ == "__main__":
     print("#"*50)
     
     print("WSUM")
-    res = w.solve(pref_indexes=criteria_idx, prefs=criteria_prefs, weights=criteria_weights, target='min')
+    res = w.solve(pref_indexes=criteria_idx, prefs=criteria_prefs, weights=criteria_weights, target='max')
     print(res)
     print("#"*50)
